@@ -430,12 +430,6 @@ class Chat:
         return self.gpt_generator.ask(formatted_prompt)
 
     def valid(self):
-        prompt_template = PromptTemplate(
-            input_variables=["question", "answer"],
-            template=prompt.valid_stsv()
-        )
-        formatted_prompt = prompt_template.format(question=self.question, answer=self.answer)
-
         val_512 = self.validator_512.evaluate(self.question, self.answer, self.reference_final)
         val_768 = self.validator_768.evaluate(self.question, self.answer, self.reference_final)
         val_1024 = self.validator_1024.evaluate(self.question, self.answer, self.reference_final)
@@ -446,6 +440,12 @@ class Chat:
         print(f"val_768: {val_768}")
         print(f"val_1024: {val_1024}")
         print(f"qa_mean: {qa_mean}\nqd_mean: {qd_mean}\nad_mean: {ad_mean}")
+
+        prompt_template = PromptTemplate(
+            input_variables=["question", "answer", "qa_mean", "reference" "qd_mean", "ad_mean"],
+            template=prompt.valid_stsv()
+        )
+        formatted_prompt = prompt_template.format(question=self.question, answer=self.answer, reference=self.reference, qa_mean=qa_mean, qd_mean=qd_mean, ad_mean=ad_mean)
 
         return self.gpt_valid.ask(formatted_prompt).lower()
 

@@ -159,13 +159,34 @@ Bạn là trợ lý phân tích câu trả lời theo khuôn mẫu.
 
 Câu hỏi: {question}
 Câu trả lời: {answer}
-Nếu câu trả lời 'không có thông tin' thì trả lời no mà không cần suy nghĩ
-Nhiệm vụ:
+Tài liệu: {reference}
+Các metrics:
+qa_mean: {qa_mean}
+qd_mean: {qd_mean}
+ad_mean: {ad_mean}
+
+Giải thích các metrics:
+- qa_mean: Cosine simalirity giữa câu hỏi hỏi và câu trả lời
+- qd_mean: Cosine simalirity cao nhất giữa câu hỏi và tài liệu
+- ad_mean: Cosine simalirity cao nhất giữa câu trả lời và tài liệu
+
+Bạn sẽ phải tự chọn ngưỡng threshhold cho từng metrics, vào từng trường hợp, điều kiện, câu hỏi, câu trả lời, tài liệu khác nhau
+
+Nhiệm vụ của bạn là dựa vào các metrics và các kiến thức mà bạn đã học được hãy:
 1. Xác định loại của câu trả lời (what, who, where, how, why).
-2. Kiểm tra câu trả lời có khớp với câu hỏi không:
-2.1 Nếu khớp, trả lời "yes".
-2.2 Nếu 'không có thông tin' hoặc câu trả lời không thỏa mãn thì trả lời 'no'.
-Trả lời: Chỉ 1 từ ("yes" hoặc "no")."""
+2. Kiểm tra câu trả lời có khớp với câu hỏi không
+3. Kiểm tra câu hỏi có nằm trong tài liệu hay không
+4. Kiểm tra câu trả lời có nằm trong tài liệu hay không
+
+Lưu ý:
+1. Nếu câu trả lời 'không có thông tin' thì trả lời no mà không cần suy nghĩ
+2. Không giải thích gì thêm
+3. Hãy chú ý nhiều vào metrics để đánh giá
+
+Nếu thỏa tất cả điều kiện trên hãy trả lời "yes".
+Nếu 'không có thông tin' hoặc câu trả lời không thỏa mãn thì trả lời 'no'.
+Trả lời: Chỉ 1 từ ("yes" hoặc "no").
+"""
 
 def commentor():
     return """
