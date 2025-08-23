@@ -448,8 +448,7 @@ class Chat:
             template=prompt.commentor()
         )
         formatted_prompt = prompt_template.format(question=self.question, entities=self.extract,
-                                                  references=self.reference)
-        # return self.gemini_commentor.generator(formatted_prompt)
+                                                  references=str(self.reference_final))
         return self.gpt_commentor.ask(formatted_prompt)
 
     def commentor_prime(self):
