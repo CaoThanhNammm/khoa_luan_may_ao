@@ -199,12 +199,9 @@ Hãy phản hồi sửa lỗi một cách chi tiết nhất có thể cho, chỉ
 ### Thực thể chủ đề: {entities}
 ### Tài liệu khả thi: {references}
 
-Lưu ý:
-1. Hiện tại chỉ có 2 nguồn là 'TEXT' và 'GRAPH'. KHÔNG ĐỀ NGHỊ NGUỒN KHÁC NGOÀI 2 CÁI TRÊN
-
 Phản hồi theo mẫu:
 1. <hãy chỉ ra lỗi>
-2. <đề xuất ngắn gọn, rõ ràng, cụ thể để sửa lỗi tương ứng với 'TEXT' hoặc 'GRAPH', mỗi lần chỉ đề xuất 1 nguồn, không tính tới bước tiếp theo>
+2. <đề xuất ngắn gọn, rõ ràng, cụ thể để sửa lỗi>
 """
 
 def extract_entities_relationship_from_text():

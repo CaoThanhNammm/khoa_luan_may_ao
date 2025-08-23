@@ -336,18 +336,14 @@ class Neo4j:
     def encode(self, texts):
         return self.sentence_model.encode(texts, convert_to_tensor=True)
 
-    def re_ranking(self, embed_question, embed_documents, documents, k):
+    def re_ranking(self, embed_question, embed_documents, documents):
         if embed_question.dim() == 1:
             embed_question = embed_question.unsqueeze(0)
 
-        # cosine similarity
         similarities = F.cosine_similarity(embed_question, embed_documents, dim=-1)
 
-        # top-k
-        top_k_values, top_k_indices = torch.topk(similarities, k)
+        results = [doc for sim, doc in zip(similarities.tolist(), documents) if sim > 0]
 
-        # trả về list string
-        results = [documents[idx] for idx in top_k_indices.tolist()]
         return results
 
     def fetch_subgraph(self, query):
