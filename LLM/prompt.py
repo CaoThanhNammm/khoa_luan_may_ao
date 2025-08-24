@@ -239,95 +239,97 @@ Yêu cầu:
 Ví dụ: 
 Văn bản: Đại sứ Iran tại LHQ cho rằng làm giàu uranium là quyền không thể tước bỏ của mỗi quốc gia, khẳng định Tehran sẽ không từ bỏ hoạt động này. Trong cuộc phỏng vấn với kênh CBS News của Mỹ ngày 29/6, đại sứ Iran tại Liên Hợp Quốc Amir Saeid Iravani được hỏi liệu Tehran có ý định "phục hồi chương trình làm giàu uranium trên lãnh thổ của mình" hay không. Ông trả lời bằng cách trích dẫn điều khoản của Hiệp ước Không phổ biến vũ khí hạt nhân (NPT), trong đó nêu rõ các quốc gia có quyền sử dụng công nghệ hạt nhân vì mục đích hòa bình, trong đó có làm giàu uranium, miễn là công nghệ này vẫn nằm trong giới hạn nhất định.
 Kết quả:
-{
+{{
   "relationships": [
-    {
-      "source": {
+    {{
+      "source": {{
         "name": "Amir Saeid Iravani",
         "title": "Đại sứ Iran tại LHQ"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "Iran"
-      },
+      }},
       "type_source": "Person",
       "type_target": "Country",
       "relation": "là_đại_sứ_của"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "Amir Saeid Iravani",
         "title": "Đại sứ Iran tại LHQ"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "LHQ",
         "full_name": "Liên Hợp Quốc"
-      },
+      }},
       "type_source": "Person",
       "type_target": "Organization",
       "relation": "làm_việc_tại"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "Iran"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "uranium"
-      },
+      }},
       "type_source": "Country",
       "type_target": "ChemicalElement",
       "relation": "làm_giàu"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "Tehran"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "Iran"
-      },
+      }},
       "type_source": "Location",
       "type_target": "Country",
       "relation": "là_thủ_đô_của"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "Amir Saeid Iravani",
         "title": "Đại sứ Iran tại LHQ"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "CBS News",
         "country": "Mỹ",
         "interview_date": "29/6"
-      },
+      }},
       "type_source": "Person",
       "type_target": "Organization",
       "relation": "được_phỏng_vấn_bởi"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "CBS News"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "Mỹ"
-      },
+      }},
       "type_source": "Organization",
       "type_target": "Country",
       "relation": "thuộc_về"
-    },
-    {
-      "source": {
+    }},
+    {{
+      "source": {{
         "name": "Iran"
-      },
-      "target": {
+      }},
+      "target": {{
         "name": "Hiệp ước Không phổ biến vũ khí hạt nhân",
         "acronym": "NPT",
         "content": "Các quốc gia có quyền sử dụng công nghệ hạt nhân vì mục đích hòa bình"
-      },
+      }},
       "type_source": "Country",
       "type_target": "Treaty",
       "relation": "trích_dẫn"
-    }
+    }}
   ]
-}
+}}
+
+Văn bản: '{sentence}'
 """
 
 def extract_question_from_text():
@@ -790,20 +792,24 @@ Văn bản tôi truyền vào có thể là một bài viết khoa học về m�
 3. Các đoạn văn nhỏ phải liền mạch với nhau, nghĩa là nội dung của đoạn sau phải có sự kết nối tự nhiên với đoạn trước, giống như trong văn bản gốc.
 4. Mỗi đoạn phải có ít nhất 2 câu và nhiều nhất là 4 câu. 
 5. Trả về kết quả dưới dạng json như sau:
-{
+{{
 "đoạn 1": "",
 "đoạn 2": "",
 "đoạn 3": "",
 "đoạn 4": "",
 ....
-}
+}}
 6. Phải trích xuất từ đầu đến cuối, một cách liên tục và liền mạch mà không bỏ lỡ bất kỳ từ gì
 7. Chỉ trích xuất những nội dung có ý nghĩa và nội dung. Bỏ các nội dung của header, footer, phần, chương, 1., 2., 3., a., b., c., mục lục,...
 8. Json phải sử dụng ký tự "" không được dùng ''
 9. HÃY NHỚ MỞ NGOẶC VÀ ĐÓNG NGOẶC ĐỀ ĐÚNG FORMAT CỦA JSON
 10. KHÔNG GIẢI THÍCH GÌ THÊM, KHÔNG MỞ ĐẦU, KẾT THÚC
 11. NỘI DUNG CỦA TỪNG ĐOẠN KHÔNG CHỨA CHUỖI LỒNG CHUỖI VÍ DỤ NHƯ "xin chào, tôi tên là h"hoang" MÀ ĐÚNG LÀ "xin chào, tôi tên là h hoang"
-Hãy trích xuất các đoạn văn nhỏ theo yêu cầu trên và trả lời bằng tiếng Việt. Chỉ trả về theo dạng json và không giải thích gì thêm, không mở đầu, không kết thúc"""
+Hãy trích xuất các đoạn văn nhỏ theo yêu cầu trên và trả lời bằng tiếng Việt. Chỉ trả về theo dạng json và không giải thích gì thêm, không mở đầu, không kết thúc
+
+Văn bản: "{sentence}"
+
+"""
 
 
 def summary_answer():
@@ -840,11 +846,13 @@ def create_title():
     return """
 Bạn là một chuyên gia ngôn ngữ. Dưới đây là một đoạn văn bản dài. Hãy thực hiện các bước sau:
 Nếu trong đoạn văn bản có tiêu đề rõ ràng (ví dụ nằm ở đầu đoạn hoặc được phân biệt rõ ràng), hãy trích xuất tiêu đề đó.
-Nếu không có tiêu đề rõ ràng, hãy đọc và tóm tắt nội dung đoạn văn để tạo ra một tiêu đề phù hợp, ngắn gọn, chính xác và bao quát nội dung chính.
+Nếu không có tiêu đề rõ ràng, hãy đọc và ghi chi tiết nội dung đoạn văn để tạo ra một tiêu đề phù hợp, chính xác và bao quát nội dung chính(nếu có nhiều chủ để thì hãy ghi hết ra).
 Đầu ra: 
-{
+{{
     "title": "<title>"
-}
+}}
+
+Văn bản: '{sentence}'
 """
 
 def first_decision_prime():

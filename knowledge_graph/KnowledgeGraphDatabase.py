@@ -337,11 +337,13 @@ class Neo4j:
         return self.sentence_model.encode(texts, convert_to_tensor=True)
 
     def re_ranking(self, embed_question, embed_documents, documents):
+        if len(documents) == 0:
+            return []
         if embed_question.dim() == 1:
             embed_question = embed_question.unsqueeze(0)
 
         similarities = F.cosine_similarity(embed_question, embed_documents, dim=-1)
-
+        print(similarities)
         results = [doc for sim, doc in zip(similarities.tolist(), documents) if sim > 0]
 
         return results
@@ -468,25 +470,26 @@ class Neo4j:
 
         return documents
 
-    def import_relationships(self, content, part, type_Part):
+    def import_relationships(self, content, name_part, type_part):
         relationships = content["relationships"]
         with self.driver.session() as session:
             for rel in relationships:
                 source = rel["source"]
                 target = rel["target"]
                 relation = rel["relation"].upper().replace(" ", "_").replace("-", "_")
-                print(f'{source} {relation} {target}')
+
                 type_source = self._capitalize_label(rel["type_source"])
                 type_target = self._capitalize_label(rel["type_target"])
-                type_Part_cap = self._capitalize_label(type_Part)
+                type_part_cap = self._capitalize_label(type_part)
 
                 session.execute_write(
                     self._create_relation_with_Part,
                     source, type_source,
                     target, type_target,
                     relation,
-                    part, type_Part_cap
+                    name_part, type_part_cap
                 )
+                print(f'{source} {relation} {target}')
 
     @staticmethod
     def _capitalize_label(label):

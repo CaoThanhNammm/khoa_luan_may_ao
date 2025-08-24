@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     chunks = []
     all_paragraphs = []
-    sentences = pdf.read_chunks()
+    sentences = pdf.read_content()
 
     # sử dụng llama để tự động chia chunk. Ouput là mảng các json [{}, {}, {}]
     llama.set_prompt(prompt.chunking())

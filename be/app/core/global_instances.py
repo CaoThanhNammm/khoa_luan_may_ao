@@ -7,6 +7,7 @@ import os
 import boto3
 import threading
 from dotenv import load_dotenv
+from transformers.models.gpt_neo.modeling_gpt_neo import GPT_NEO_START_DOCSTRING
 
 # Add the parent directory to the path to import modules
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -25,9 +26,6 @@ load_dotenv()
 
 # Global instances
 pdf = None
-llama_chunks = None
-llama_title = None
-llama_content = None
 qdrant = None
 neo = None
 pre_processing = None
@@ -37,7 +35,7 @@ _initialization_lock = threading.Lock()
 
 def initialize_global_instances():
     """Initialize all global instances once when server starts"""
-    global pdf, llama_chunks, llama_title, llama_content, qdrant, neo, pre_processing, s3_client, _initialized
+    global pdf, qdrant, neo, pre_processing, s3_client, _initialized
     
     # Sử dụng lock để đảm bảo thread-safe
     with _initialization_lock:
@@ -107,23 +105,7 @@ def initialize_global_instances():
         except Exception as e:
             print(f"❌ Error initializing Qdrant: {str(e)}")
             qdrant = None
-        
-        # 4. Khởi tạo mô hình llama để tạo chunking
-        try:
-            model_llama_405b = os.getenv("MODEL_LLAMA_405B")
-            model_llama_70b = os.getenv("MODEL_LLAMA_70B")
-            api_key_01 = os.getenv("API_KEY_NVIDIA_01")
-            api_key_02 = os.getenv("API_KEY_NVIDIA_02")
-            api_key_03 = os.getenv("API_KEY_NVIDIA_03")
-            
-            llama_title = Llama(api_key_01, model_llama_70b)
-            llama_content = Llama(api_key_02, model_llama_405b)
-            llama_chunks = Llama(api_key_03, model_llama_405b)
-            print("✅ Llama models initialized successfully")
-        except Exception as e:
-            print(f"❌ Error initializing Llama models: {str(e)}")
-            llama_title = llama_content = llama_chunks = None
-        
+
         # 5. khởi tạo neo4j
         try:
             uri = os.getenv("URI_NEO")
@@ -147,30 +129,6 @@ def get_pdf():
     if pdf is None:
         raise RuntimeError("PDF instance failed to initialize.")
     return pdf
-
-def get_llama_chunks():
-    """Get the global llama_chunks instance"""
-    if not _initialized:
-        initialize_global_instances()
-    if llama_chunks is None:
-        raise RuntimeError("Llama chunks instance failed to initialize.")
-    return llama_chunks
-
-def get_llama_title():
-    """Get the global llama_title instance"""
-    if not _initialized:
-        initialize_global_instances()
-    if llama_title is None:
-        raise RuntimeError("Llama title instance failed to initialize.")
-    return llama_title
-
-def get_llama_content():
-    """Get the global llama_content instance"""
-    if not _initialized:
-        initialize_global_instances()
-    if llama_content is None:
-        raise RuntimeError("Llama content instance failed to initialize.")
-    return llama_content
 
 def get_qdrant():
     """Get the global Qdrant instance"""
@@ -213,9 +171,6 @@ def get_initialization_status():
     return {
         "initialized": _initialized,
         "pdf": pdf is not None,
-        "llama_chunks": llama_chunks is not None,
-        "llama_title": llama_title is not None,
-        "llama_content": llama_content is not None,
         "qdrant": qdrant is not None,
         "neo": neo is not None,
         "pre_processing": pre_processing is not None,
