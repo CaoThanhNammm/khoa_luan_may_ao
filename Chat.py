@@ -75,7 +75,6 @@ class Chat:
         self.validator_512 = Validator(qdrant.get_model_512())
         self.validator_768 = Validator(qdrant.get_model_768())
         self.validator_1024 = Validator(qdrant.get_model_1024())
-
         print('Initialize Chat success')
 
     def answer_by_context(self):

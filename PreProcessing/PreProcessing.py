@@ -9,6 +9,7 @@ import unicodedata
 
 # Global VnCoreNLP instance
 save_dir = '/root/vncorenlp'
+# save_dir = r"C:\Users\Nam\Desktop\vncorenlp"
 VnCoreNLP_INSTANCE = None
 
 def get_vncorenlp_instance():
